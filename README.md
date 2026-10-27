@@ -4,7 +4,7 @@ A Shiny application with a reproducible five-slide Slidify pitch. Created Octobe
 
 ## Application
 
-Public deployment: pending shinyapps.io account setup.
+Public deployment: https://anubhavgpta.shinyapps.io/fuel-economy-explorer/
 
 The app predicts fuel economy from vehicle weight and horsepower using `lm(mpg ~ wt + hp, data = mtcars)`. It calculates annual fuel use and cost from annual mileage and fuel price. The app's **How to use** tab contains all user documentation.
 
@@ -30,4 +30,5 @@ rsconnect::deployApp("app", appName = "fuel-economy-explorer")
 ```
 
 Never commit deployment tokens or secrets.
+
 

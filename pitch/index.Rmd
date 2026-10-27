@@ -55,6 +55,7 @@ Doubling annual miles doubles gallons and cost. Changing fuel price changes cost
 - Shows model uncertainty and guards against implausible predictions.
 - Historical observational data cannot establish causation or rate modern cars.
 - Source code: [ui.R and server.R](https://github.com/anubhavgpta/shiny-fuel-explorer-2026/tree/gh-pages/app).
-- Open the app using the deployment link in the repository README.
+- [Try Fuel Economy Explorer](https://anubhavgpta.shinyapps.io/fuel-economy-explorer/).
+
 
 
