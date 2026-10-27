@@ -1,0 +1,72 @@
+---
+title: Fuel Economy Explorer
+subtitle: Predict mpg and annual fuel costs | October 27, 2026
+author: Anubhav Gupta
+framework: io2012
+highlighter: highlight.js
+hitheme: tomorrow
+mode: selfcontained
+knit: slidify::knit2slides
+---
+
+
+## Four inputs, results that update automatically
+
+1. Set weight and horsepower using the sliders.
+2. Enter annual miles and fuel price.
+3. Read predicted mpg, its 95% prediction interval, and estimated annual cost.
+
+The app includes a comparison plot and a **How to use** tab with step-by-step instructions, units, formulas, and limitations.
+
+---
+
+## A reproducible prediction
+
+This R code runs when Slidify builds the presentation.
+
+
+``` r
+model <- lm(mpg ~ wt + hp, data=mtcars)
+prediction <- predict(model,
+  data.frame(wt=3, hp=110), interval="prediction")
+round(prediction, 1)
+```
+
+```
+##    fit  lwr  upr
+## 1 22.1 16.7 27.5
+```
+
+The model uses 32 cars from 1973-74. The interval describes uncertainty for an individual car, not a guarantee.
+
+---
+
+## From mpg to an annual budget
+
+
+``` r
+annual_miles <- 12000
+price_per_gallon <- 3.50
+mpg <- prediction[1, "fit"]
+round(c(gallons=annual_miles / mpg,
+        cost_USD=annual_miles / mpg * price_per_gallon), 2)
+```
+
+```
+##  gallons cost_USD 
+##   543.02  1900.56
+```
+
+Doubling annual miles doubles gallons and cost. Changing fuel price changes cost, while the mpg prediction stays fixed. The Shiny server recalculates these outputs reactively.
+
+---
+
+## Simple to try, clear about its limits
+
+- Uses standard Shiny controls and requires no data upload.
+- Shows model uncertainty and guards against implausible predictions.
+- Historical observational data cannot establish causation or rate modern cars.
+- Source code: [ui.R and server.R](https://github.com/anubhavgpta/shiny-fuel-explorer-2026/tree/gh-pages/app).
+- Open the app using the deployment link in the repository README.
+
+

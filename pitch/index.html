@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fuel Economy Explorer</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Fuel Economy Explorer">
+  <meta name="author" content="Anubhav Gupta">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="libraries/widgets/quiz/js/jquery.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Fuel Economy Explorer</h1>
+    <h2>Predict mpg and annual fuel costs | October 27, 2026</h2>
+    <p>Anubhav Gupta<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  
+  <article data-timings="">
+    <h2 id="four-inputs-results-that-update-automatically">Four inputs, results that update automatically</h2>
+<ol>
+<li>Set weight and horsepower using the sliders.</li>
+<li>Enter annual miles and fuel price.</li>
+<li>Read predicted mpg, its 95% prediction interval, and estimated annual cost.</li>
+</ol>
+<p>The app includes a comparison plot and a <strong>How to use</strong> tab with step-by-step instructions, units, formulas, and limitations.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  
+  <article data-timings="">
+    <h2 id="a-reproducible-prediction">A reproducible prediction</h2>
+<p>This R code runs when Slidify builds the presentation.</p>
+<pre><code class="language-r">model &lt;- lm(mpg ~ wt + hp, data=mtcars)
+prediction &lt;- predict(model,
+  data.frame(wt=3, hp=110), interval=&quot;prediction&quot;)
+round(prediction, 1)
+</code></pre>
+<pre><code>##    fit  lwr  upr
+## 1 22.1 16.7 27.5
+</code></pre>
+<p>The model uses 32 cars from 1973-74. The interval describes uncertainty for an individual car, not a guarantee.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  
+  <article data-timings="">
+    <h2 id="from-mpg-to-an-annual-budget">From mpg to an annual budget</h2>
+<pre><code class="language-r">annual_miles &lt;- 12000
+price_per_gallon &lt;- 3.50
+mpg &lt;- prediction[1, &quot;fit&quot;]
+round(c(gallons=annual_miles / mpg,
+        cost_USD=annual_miles / mpg * price_per_gallon), 2)
+</code></pre>
+<pre><code>##  gallons cost_USD 
+##   543.02  1900.56
+</code></pre>
+<p>Doubling annual miles doubles gallons and cost. Changing fuel price changes cost, while the mpg prediction stays fixed. The Shiny server recalculates these outputs reactively.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  
+  <article data-timings="">
+    <h2 id="simple-to-try-clear-about-its-limits">Simple to try, clear about its limits</h2>
+<ul>
+<li>Uses standard Shiny controls and requires no data upload.</li>
+<li>Shows model uncertainty and guards against implausible predictions.</li>
+<li>Historical observational data cannot establish causation or rate modern cars.</li>
+<li>Source code: <a href="https://github.com/anubhavgpta/shiny-fuel-explorer-2026/tree/gh-pages/app">ui.R and server.R</a>.</li>
+<li>Open the app using the deployment link in the repository README.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='NA'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='NA'>
+         4
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
